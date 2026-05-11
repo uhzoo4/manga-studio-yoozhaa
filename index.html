@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MANGA STUDIO — Unleash Your Inner Hero</title>
+  <meta name="description" content="Enter the world of Manga Studio — an immersive, comic-style experience with explosive animations and storytelling." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Permanent+Marker&family=Dela+Gothic+One&family=Kosugi+Maru&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="index.css" />
+</head>
+<body>
+  <!-- PRELOADER / SPLASH -->
+  <div id="preloader" class="preloader" aria-hidden="true">
+    <div class="preloader-inner">
+      <div class="manga-burst">
+        <span class="burst-text">読</span>
+      </div>
+      <div class="loading-bar"><div class="loading-fill"></div></div>
+      <p class="loading-text">LOADING...</p>
+    </div>
+  </div>
+  <!-- SPEED LINES OVERLAY (persistent) -->
+  <div class="speed-lines-overlay" aria-hidden="true"></div>
+  <!-- HALFTONE DOT OVERLAY -->
+  <div class="halftone-overlay" aria-hidden="true"></div>
+  <!-- NAV -->
+  <nav id="main-nav" class="manga-nav">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo" id="nav-logo">
+        <span class="logo-kanji">漫画</span>
+        <span class="logo-text">STUDIO</span>
+      </a>
+      <button class="burger" id="burger-btn" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span class="burger-line"></span>
+        <span class="burger-line"></span>
+        <span class="burger-line"></span>
+      </button>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="#hero" class="nav-link" id="nav-hero">STORY</a></li>
+        <li><a href="#panels" class="nav-link" id="nav-panels">PANELS</a></li>
+        <li><a href="#characters" class="nav-link" id="nav-characters">CHARACTERS</a></li>
+        <li><a href="#action" class="nav-link" id="nav-action">ACTION</a></li>
+        <li><a href="#cta" class="nav-link nav-link--cta" id="nav-cta">JOIN NOW</a></li>
+      </ul>
+    </div>
+  </nav>
+  <!-- HERO SECTION -->
+  <header id="hero" class="hero-section">
+    <div class="hero-bg-art" aria-hidden="true">
+      <svg class="hero-starburst" viewBox="0 0 800 800" preserveAspectRatio="xMidYMid slice">
+        <polygon class="starburst-shape" points="400,0 440,300 800,200 480,380 700,600 420,440 400,800 380,440 100,600 320,380 0,200 360,300" />
+      </svg>
+    </div>
+    <div class="hero-content">
+      <div class="hero-speech-bubble speech-bubble--shout animate-on-scroll" data-anim="smash-in">
+        <p class="hero-pretitle">あなたのストーリーが始まる</p>
+      </div>
+      <h1 class="hero-title animate-on-scroll" data-anim="slam-down">
+        <span class="title-line title-line--1">MANGA</span>
+        <span class="title-line title-line--2">STUDIO</span>
+      </h1>
+      <p class="hero-subtitle animate-on-scroll" data-anim="fade-up">
+        <span class="subtitle-inner">CREATE. FIGHT. CONQUER.</span>
+      </p>
+      <div class="hero-cta-group animate-on-scroll" data-anim="fade-up" data-delay="300">
+        <a href="#cta" class="btn btn--primary" id="hero-cta-primary">
+          <span class="btn-text">START READING</span>
+          <span class="btn-effect" aria-hidden="true"></span>
+        </a>
+        <a href="#panels" class="btn btn--ghost" id="hero-cta-secondary">EXPLORE</a>
+      </div>
+    </div>
+    <div class="scroll-indicator animate-on-scroll" data-anim="fade-up" data-delay="800" aria-hidden="true">
+      <div class="scroll-arrow"></div>
+      <span>SCROLL DOWN</span>
+    </div>
+  </header>
+  <!-- MANGA PANELS SECTION -->
+  <section id="panels" class="panels-section">
+    <div class="section-header animate-on-scroll" data-anim="smash-in">
+      <h2 class="section-title">
+        <span class="title-effect-bg" aria-hidden="true">CHAPTERS</span>
+        THE STORY
+      </h2>
+    </div>
+    <div class="comic-grid">
+      <article class="comic-panel panel--large animate-on-scroll" data-anim="panel-reveal" id="panel-1">
+        <div class="panel-inner">
+          <div class="panel-art panel-art--1"></div>
+          <div class="panel-overlay"></div>
+          <div class="panel-content">
+            <span class="panel-number">01</span>
+            <h3 class="panel-title">THE AWAKENING</h3>
+            <p class="panel-desc">A forgotten power stirs deep within...</p>
+          </div>
+          <div class="panel-speech-bubble speech-bubble--think">
+            <p>What is this... power?!</p>
+          </div>
+        </div>
+      </article>
+      <article class="comic-panel panel--tall animate-on-scroll" data-anim="panel-reveal" data-delay="200" id="panel-2">
+        <div class="panel-inner">
+          <div class="panel-art panel-art--2"></div>
+          <div class="panel-overlay"></div>
+          <div class="panel-content">
+            <span class="panel-number">02</span>
+            <h3 class="panel-title">RISING SHADOW</h3>
+            <p class="panel-desc">Darkness creeps across the land.</p>
+          </div>
+        </div>
+      </article>
+      <article class="comic-panel panel--wide animate-on-scroll" data-anim="panel-reveal" data-delay="400" id="panel-3">
+        <div class="panel-inner">
+          <div class="panel-art panel-art--3"></div>
+          <div class="panel-overlay"></div>
+          <div class="panel-content">
+            <span class="panel-number">03</span>
+            <h3 class="panel-title">THE CLASH</h3>
+            <p class="panel-desc">Heroes collide in an epic battle!</p>
+          </div>
+          <div class="sfx-text sfx--boom" aria-hidden="true">BOOM!!</div>
+        </div>
+      </article>
+      <article class="comic-panel panel--small animate-on-scroll" data-anim="panel-reveal" data-delay="500" id="panel-4">
+        <div class="panel-inner">
+          <div class="panel-art panel-art--4"></div>
+          <div class="panel-overlay"></div>
+          <div class="panel-content">
+            <span class="panel-number">04</span>
+            <h3 class="panel-title">AFTERMATH</h3>
+          </div>
+        </div>
+      </article>
+      <article class="comic-panel panel--medium animate-on-scroll" data-anim="panel-reveal" data-delay="600" id="panel-5">
+        <div class="panel-inner">
+          <div class="panel-art panel-art--5"></div>
+          <div class="panel-overlay"></div>
+          <div class="panel-content">
+            <span class="panel-number">05</span>
+            <h3 class="panel-title">REBIRTH</h3>
+            <p class="panel-desc">From ashes, a new legend rises.</p>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+  <!-- CHARACTERS SECTION -->
+  <section id="characters" class="characters-section">
+    <div class="section-header animate-on-scroll" data-anim="smash-in">
+      <h2 class="section-title">
+        <span class="title-effect-bg" aria-hidden="true">HEROES</span>
+        CHARACTERS
+      </h2>
+    </div>
+    <div class="characters-carousel">
+      <div class="character-card animate-on-scroll" data-anim="fade-up" id="char-1">
+        <div class="card-frame">
+          <div class="card-art card-art--1">
+            <div class="card-silhouette silhouette--1"></div>
+          </div>
+          <div class="card-info">
+            <span class="card-kanji">英雄</span>
+            <h3 class="card-name">KAITO</h3>
+            <p class="card-role">THE PROTAGONIST</p>
+            <div class="power-bar">
+              <span class="power-label">POWER</span>
+              <div class="power-track"><div class="power-fill" data-power="85"></div></div>
+            </div>
+            <div class="power-bar">
+              <span class="power-label">SPEED</span>
+              <div class="power-track"><div class="power-fill" data-power="92"></div></div>
+            </div>
+            <div class="power-bar">
+              <span class="power-label">WILL</span>
+              <div class="power-track"><div class="power-fill" data-power="100"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="character-card animate-on-scroll" data-anim="fade-up" data-delay="200" id="char-2">
+        <div class="card-frame">
+          <div class="card-art card-art--2">
+            <div class="card-silhouette silhouette--2"></div>
+          </div>
+          <div class="card-info">
+            <span class="card-kanji">影</span>
+            <h3 class="card-name">YAMI</h3>
+            <p class="card-role">THE SHADOW</p>
+            <div class="power-bar">
+              <span class="power-label">POWER</span>
+              <div class="power-track"><div class="power-fill" data-power="78"></div></div>
+            </div>
+            <div class="power-bar">
+              <span class="power-label">STEALTH</span>
+              <div class="power-track"><div class="power-fill" data-power="99"></div></div>
+            </div>
+            <div class="power-bar">
+              <span class="power-label">INTEL</span>
+              <div class="power-track"><div class="power-fill" data-power="90"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="character-card animate-on-scroll" data-anim="fade-up" data-delay="400" id="char-3">
+        <div class="card-frame">
+          <div class="card-art card-art--3">
+            <div class="card-silhouette silhouette--3"></div>
+          </div>
+          <div class="card-info">
+            <span class="card-kanji">光</span>
+            <h3 class="card-name">HIKARI</h3>
+            <p class="card-role">THE GUARDIAN</p>
+            <div class="power-bar">
+              <span class="power-label">POWER</span>
+              <div class="power-track"><div class="power-fill" data-power="95"></div></div>
+            </div>
+            <div class="power-bar">
+              <span class="power-label">DEFENSE</span>
+              <div class="power-track"><div class="power-fill" data-power="100"></div></div>
+            </div>
+            <div class="power-bar">
+              <span class="power-label">HEAL</span>
+              <div class="power-track"><div class="power-fill" data-power="88"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- ACTION / FEATURES SECTION -->
+  <section id="action" class="action-section">
+    <div class="action-explosion" aria-hidden="true">
+      <div class="explosion-ring"></div>
+      <div class="explosion-ring explosion-ring--2"></div>
+    </div>
+    <div class="section-header animate-on-scroll" data-anim="smash-in">
+      <h2 class="section-title section-title--inverted">
+        <span class="title-effect-bg" aria-hidden="true">POWER</span>
+        FEATURES
+      </h2>
+    </div>
+    <div class="features-grid">
+      <div class="feature-panel animate-on-scroll" data-anim="slash-in" id="feature-1">
+        <div class="feature-icon">
+          <svg viewBox="0 0 64 64" class="icon-svg"><path d="M32 2L40 22H60L44 34L50 56L32 42L14 56L20 34L4 22H24Z" /></svg>
+        </div>
+        <h3 class="feature-title">DYNAMIC STORIES</h3>
+        <p class="feature-desc">Interactive narratives that respond to your choices. Every decision shapes the world.</p>
+        <div class="feature-sfx" aria-hidden="true">ドン!</div>
+      </div>
+      <div class="feature-panel animate-on-scroll" data-anim="slash-in" data-delay="200" id="feature-2">
+        <div class="feature-icon">
+          <svg viewBox="0 0 64 64" class="icon-svg"><circle cx="32" cy="32" r="28" fill="none" stroke-width="4"/><path d="M20 32L28 40L44 24" fill="none" stroke-width="4"/></svg>
+        </div>
+        <h3 class="feature-title">EPIC BATTLES</h3>
+        <p class="feature-desc">Real-time combat with devastating combos and ultimate techniques.</p>
+        <div class="feature-sfx" aria-hidden="true">バキ!</div>
+      </div>
+      <div class="feature-panel animate-on-scroll" data-anim="slash-in" data-delay="400" id="feature-3">
+        <div class="feature-icon">
+          <svg viewBox="0 0 64 64" class="icon-svg"><rect x="8" y="8" width="48" height="48" rx="8" fill="none" stroke-width="4"/><line x1="8" y1="32" x2="56" y2="32" stroke-width="4"/><line x1="32" y1="8" x2="32" y2="56" stroke-width="4"/></svg>
+        </div>
+        <h3 class="feature-title">CUSTOM PANELS</h3>
+        <p class="feature-desc">Create your own manga panels with our powerful editor tools.</p>
+        <div class="feature-sfx" aria-hidden="true">ゴゴゴ</div>
+      </div>
+      <div class="feature-panel animate-on-scroll" data-anim="slash-in" data-delay="600" id="feature-4">
+        <div class="feature-icon">
+          <svg viewBox="0 0 64 64" class="icon-svg"><path d="M32 4C18 4 8 16 8 28C8 44 32 60 32 60C32 60 56 44 56 28C56 16 46 4 32 4Z" fill="none" stroke-width="4"/></svg>
+        </div>
+        <h3 class="feature-title">COMMUNITY</h3>
+        <p class="feature-desc">Join thousands of creators and readers in our growing universe.</p>
+        <div class="feature-sfx" aria-hidden="true">ワー!</div>
+      </div>
+    </div>
+  </section>
+  <!-- CTA SECTION -->
+  <section id="cta" class="cta-section">
+    <div class="cta-bg-lines" aria-hidden="true"></div>
+    <div class="cta-content animate-on-scroll" data-anim="smash-in">
+      <div class="cta-speech-bubble speech-bubble--shout speech-bubble--large">
+        <h2 class="cta-title">READY TO BEGIN?!</h2>
+      </div>
+      <p class="cta-subtitle animate-on-scroll" data-anim="fade-up" data-delay="300">
+        Your manga journey starts <strong>NOW</strong>. No turning back.
+      </p>
+      <form class="cta-form animate-on-scroll" data-anim="fade-up" data-delay="500" id="signup-form">
+        <div class="input-group">
+          <input type="email" class="manga-input" id="email-input" placeholder="your@email.com" required aria-label="Enter your email" />
+          <button type="submit" class="btn btn--primary btn--large" id="submit-btn">
+            <span class="btn-text">JOIN NOW!!</span>
+            <span class="btn-effect" aria-hidden="true"></span>
+          </button>
+        </div>
+      </form>
+      <p class="cta-note animate-on-scroll" data-anim="fade-up" data-delay="700">Free to join · No credit card · Cancel anytime</p>
+    </div>
+  </section>
+  <!-- FOOTER -->
+  <footer class="manga-footer">
+    <div class="footer-inner">
+      <div class="footer-logo">
+        <span class="logo-kanji">漫画</span>
+        <span class="logo-text">STUDIO</span>
+      </div>
+      <p class="footer-copy">© 2026 MANGA STUDIO. All Rights Reserved.</p>
+      <div class="footer-links">
+        <a href="#" id="footer-twitter">Twitter</a>
+        <a href="#" id="footer-discord">Discord</a>
+        <a href="#" id="footer-github">GitHub</a>
+      </div>
+    </div>
+  </footer>
+  <!-- CURSOR EFFECT CANVAS -->
+  <canvas id="ink-canvas" aria-hidden="true"></canvas>
+  <script src="index.js"></script>
+</body>
+</html>
