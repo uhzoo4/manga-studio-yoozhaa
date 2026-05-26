@@ -1,122 +1,276 @@
 "use client";
 
-import { useRef, useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useRef, useEffect } from 'react';
 import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 const characters = [
-  { id: 1, name: "KAITO", role: "THE PROTAGONIST", kanji: "英雄", power: 85, speed: 92, will: 100 },
-  { id: 2, name: "YAMI", role: "THE SHADOW", kanji: "影", power: 78, stealth: 99, intel: 90 },
-  { id: 3, name: "HIKARI", role: "THE GUARDIAN", kanji: "光", power: 95, defense: 100, heal: 88 },
+  {
+    id: 1,
+    name: "YUAN",
+    role: "THE VESSEL",
+    kanji: "呪",
+    stats: { power: 95, control: 40, will: 88 },
+    theme: "light",
+    quote: "The shadows don't just speak. They remember.",
+    shape: "polygon(50% 0%, 35% 15%, 25% 10%, 30% 25%, 20% 35%, 5% 55%, 15% 58%, 10% 75%, 25% 65%, 35% 100%, 65% 100%, 75% 65%, 90% 75%, 85% 58%, 95% 55%, 80% 35%, 70% 25%, 75% 10%, 65% 15%)"
+  },
+  {
+    id: 2,
+    name: "KAITO",
+    role: "THE BLADE",
+    kanji: "刃",
+    stats: { power: 82, speed: 98, technique: 100 },
+    theme: "dark",
+    quote: "A severed thread cannot be retied. It must be cut clean.",
+    shape: "polygon(50% 0%, 40% 10%, 30% 5%, 35% 20%, 15% 40%, 5% 60%, 20% 55%, 15% 80%, 30% 70%, 40% 100%, 60% 100%, 70% 70%, 85% 80%, 80% 55%, 95% 60%, 85% 40%, 65% 20%, 70% 5%, 60% 10%)"
+  }
 ];
 
 export default function Characters() {
-  const [activeId, setActiveId] = useState(1);
   const containerRef = useRef<HTMLDivElement>(null);
+  const leftPanelRef = useRef<HTMLDivElement>(null);
+  const rightPanelRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReduced) return;
+
     const ctx = gsap.context(() => {
-      gsap.from(".char-title", {
+
+      // --- Narrative heading reveal ---
+      gsap.from(".char-narrative", {
+        opacity: 0,
+        y: 20,
+        duration: 0.9,
+        ease: "power3.out",
         scrollTrigger: {
           trigger: containerRef.current,
-          start: "top 80%",
-        },
-        y: 60,
-        opacity: 0,
-        duration: 1.2,
-        ease: "power4.out"
+          start: "top 85%",
+          toggleActions: "play none none none",
+        }
       });
+
+      // --- YUAN dossier reveal (left panel) ---
+      if (leftPanelRef.current) {
+        // Panel fade + rise
+        gsap.from(leftPanelRef.current, {
+          opacity: 0,
+          y: 30,
+          duration: 1,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: leftPanelRef.current,
+            start: "top 88%",
+            toggleActions: "play none none none",
+          }
+        });
+
+        // Staggered internal elements — editorial dossier reveal
+        const leftInternals = leftPanelRef.current.querySelectorAll('.dossier-element');
+        gsap.from(leftInternals, {
+          opacity: 0,
+          y: 15,
+          duration: 0.7,
+          ease: "power2.out",
+          stagger: 0.12,
+          scrollTrigger: {
+            trigger: leftPanelRef.current,
+            start: "top 80%",
+            toggleActions: "play none none none",
+          }
+        });
+
+        // Stat bars — YUAN
+        const leftBars = leftPanelRef.current.querySelectorAll('.stat-bar-fill');
+        leftBars.forEach((bar) => {
+          const targetWidth = bar.getAttribute('data-width') || '0%';
+          gsap.fromTo(bar,
+            { width: '0%' },
+            {
+              width: targetWidth,
+              duration: 1.1,
+              ease: "power3.out",
+              scrollTrigger: {
+                trigger: bar,
+                start: "top 92%",
+                toggleActions: "play none none none",
+              }
+            }
+          );
+        });
+      }
+
+      // --- KAITO dossier reveal (right panel) ---
+      if (rightPanelRef.current) {
+        // Panel fade + rise with slight delay for reading stagger
+        gsap.from(rightPanelRef.current, {
+          opacity: 0,
+          y: 30,
+          duration: 1,
+          delay: 0.15,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: rightPanelRef.current,
+            start: "top 88%",
+            toggleActions: "play none none none",
+          }
+        });
+
+        // Staggered internal elements
+        const rightInternals = rightPanelRef.current.querySelectorAll('.dossier-element');
+        gsap.from(rightInternals, {
+          opacity: 0,
+          y: 15,
+          duration: 0.7,
+          ease: "power2.out",
+          stagger: 0.12,
+          delay: 0.2,
+          scrollTrigger: {
+            trigger: rightPanelRef.current,
+            start: "top 80%",
+            toggleActions: "play none none none",
+          }
+        });
+
+        // Stat bars — KAITO
+        const rightBars = rightPanelRef.current.querySelectorAll('.stat-bar-fill');
+        rightBars.forEach((bar) => {
+          const targetWidth = bar.getAttribute('data-width') || '0%';
+          gsap.fromTo(bar,
+            { width: '0%' },
+            {
+              width: targetWidth,
+              duration: 1.1,
+              delay: 0.1,
+              ease: "power3.out",
+              scrollTrigger: {
+                trigger: bar,
+                start: "top 92%",
+                toggleActions: "play none none none",
+              }
+            }
+          );
+        });
+      }
     }, containerRef);
+
     return () => ctx.revert();
   }, []);
 
-  const activeChar = characters.find(c => c.id === activeId)!;
-
   return (
-    <section ref={containerRef} className="py-24 px-6 max-w-7xl mx-auto border-b-[2px] border-[var(--color-manga-black)] bg-[var(--color-manga-white)] relative z-10">
-      <div className="text-center mb-20 relative char-title">
-        <h2 className="text-[clamp(2.5rem,8vw,5rem)] font-bold tracking-[0.15em] text-[var(--color-manga-black)] relative z-10 uppercase -skew-x-[8deg]">
-          <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[clamp(4rem,14vw,10rem)] opacity-[0.03] whitespace-nowrap pointer-events-none tracking-normal">HEROES</span>
-          Characters
+    <section ref={containerRef} className="py-20 px-4 md:px-8 max-w-[80rem] mx-auto border-b-[2px] border-[var(--color-manga-black)] bg-[var(--color-manga-white)] relative z-10 overflow-hidden">
+      
+      {/* Narrative Lead-in */}
+      <div className="max-w-3xl mx-auto text-center mb-16 relative z-10 px-4 char-narrative">
+        <p className="text-xs md:text-sm font-bold tracking-[0.3em] uppercase text-[var(--color-manga-gray)] mb-4">
+          The Narrative Divides
+        </p>
+        <h2 className="text-[clamp(2rem,5vw,3.5rem)] font-bold tracking-[0.05em] text-[var(--color-manga-black)] uppercase leading-[1.1] -skew-x-[6deg]">
+          Two Souls.<br/>One Inevitable Clash.
         </h2>
       </div>
 
-      <div className="flex flex-col md:flex-row gap-8">
-        <div className="w-full md:w-1/3 flex flex-col gap-4">
-          {characters.map((char) => (
-            <button
-              key={char.id}
-              onClick={() => setActiveId(char.id)}
-              className={`text-left p-6 border-[2px] border-[var(--color-manga-black)] relative overflow-hidden transition-all duration-500 ease-[var(--ease-cinematic)] ${activeId === char.id ? 'bg-[var(--color-manga-black)] text-[var(--color-manga-white)] shadow-[6px_6px_0_rgba(17,17,17,0.15)] -translate-y-1' : 'bg-transparent text-[var(--color-manga-black)] hover:bg-black/[0.03] hover:-translate-y-0.5'}`}
-            >
-              {activeId === char.id && (
-                <motion.div layoutId="char-active-bg" className="absolute inset-0 bg-[var(--color-manga-black)] z-0" />
-              )}
-              <div className="relative z-10 flex justify-between items-center">
-                <div>
-                  <h3 className="text-2xl font-bold tracking-[0.1em] -skew-x-[6deg]">{char.name}</h3>
-                  <p className="text-xs opacity-70 tracking-[0.15em] mt-1 font-bold uppercase">{char.role}</p>
-                </div>
-                <span className="text-4xl opacity-20 font-bold" style={{ fontFamily: 'var(--font-noto)' }}>{char.kanji}</span>
+      {/* Dual Character Dossiers */}
+      <div className="flex flex-col lg:flex-row w-full border-[2px] border-[var(--color-manga-black)] shadow-[8px_8px_0_var(--color-manga-black)] bg-white relative mx-auto max-w-6xl">
+        
+        {/* YUAN DOSSIER */}
+        <div 
+          ref={leftPanelRef} 
+          className="w-full lg:w-1/2 p-6 sm:p-8 lg:p-10 border-b-[2px] lg:border-b-0 lg:border-r-[2px] border-[var(--color-manga-black)] relative group overflow-hidden bg-[var(--color-manga-white)] text-[var(--color-manga-black)]"
+        >
+          <div className="absolute inset-0 bg-crosshatch-1 opacity-[0.03] pointer-events-none mix-blend-multiply"></div>
+          <span className="absolute -top-6 -right-6 text-[14rem] leading-none opacity-[0.03] font-bold pointer-events-none transition-transform duration-1000 group-hover:scale-105" style={{ fontFamily: 'var(--font-noto)' }}>{characters[0].kanji}</span>
+          
+          <div className="relative z-10 h-full flex flex-col justify-between min-h-[450px]">
+            <div className="dossier-element flex justify-between items-start">
+              <div>
+                <h3 className="text-4xl sm:text-5xl font-bold tracking-[0.02em] -skew-x-[8deg] uppercase leading-none">{characters[0].name}</h3>
+                <p className="text-xs font-bold tracking-[0.3em] mt-2 uppercase opacity-70">{characters[0].role}</p>
               </div>
-            </button>
-          ))}
-        </div>
+              <span className="text-[3.5rem] sm:text-[4.5rem] leading-none opacity-10 font-bold" style={{ fontFamily: 'var(--font-noto)' }}>{characters[0].kanji}</span>
+            </div>
 
-        <div className="w-full md:w-2/3 border-[2px] border-[var(--color-manga-black)] p-10 relative overflow-hidden bg-white min-h-[450px] shadow-[8px_8px_0_var(--color-manga-black)]">
-          <div className="absolute inset-0 bg-crosshatch-1 opacity-[0.04] pointer-events-none mix-blend-multiply"></div>
+            <div className="dossier-element flex-1 flex items-center justify-center py-10">
+              <div 
+                className="w-32 h-44 sm:w-40 sm:h-56 bg-[var(--color-manga-black)] relative before:absolute before:inset-0 before:bg-white before:opacity-[0.05] before:mix-blend-overlay transition-transform duration-700 ease-[var(--ease-cinematic)] group-hover:scale-[1.02]"
+                style={{ clipPath: characters[0].shape }}
+              />
+            </div>
 
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeId}
-              initial={{ opacity: 0, x: 20, filter: "blur(4px)" }}
-              animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
-              exit={{ opacity: 0, x: -20, filter: "blur(4px)" }}
-              transition={{ duration: 0.5, ease: [0.34, 1.56, 0.64, 1] }}
-              className="relative z-10 flex flex-col md:flex-row gap-10 h-full"
-            >
-              <div className="w-full md:w-1/2 flex flex-col justify-center gap-6">
-                <div className="relative">
-                  <span className="text-[10rem] leading-none text-[var(--color-manga-black)] opacity-[0.03] absolute -top-12 -left-8 pointer-events-none" style={{ fontFamily: 'var(--font-noto)' }}>{activeChar.kanji}</span>
-                  <h3 className="text-6xl font-bold tracking-[0.05em] text-[var(--color-manga-black)] -skew-x-[8deg] uppercase relative z-10">{activeChar.name}</h3>
-                  <p className="text-sm font-bold tracking-[0.2em] text-[var(--color-manga-gray)] mt-3 uppercase relative z-10">{activeChar.role}</p>
-                </div>
+            <div className="flex flex-col gap-6">
+              <p className="dossier-element text-sm sm:text-base font-medium italic tracking-wide opacity-80 border-l-4 pl-4 border-[var(--color-manga-black)] py-1">
+                &quot;{characters[0].quote}&quot;
+              </p>
 
-                <div className="flex flex-col gap-5 mt-6 relative z-10">
-                  {Object.entries(activeChar).filter(([k]) => !['id', 'name', 'role', 'kanji'].includes(k)).map(([key, val]) => (
-                    <div key={key} className="flex items-center gap-5">
-                      <span className="w-24 text-xs font-bold tracking-[0.15em] uppercase opacity-80">{key}</span>
-                      <div className="flex-1 h-2 border-[1px] border-[var(--color-manga-black)] bg-[var(--color-manga-light)] relative overflow-hidden">
-                        <motion.div
-                          initial={{ width: 0 }}
-                          animate={{ width: `${val}%` }}
-                          transition={{ duration: 1.2, delay: 0.1, ease: [0.34, 1.56, 0.64, 1] }}
-                          className="absolute top-0 left-0 h-full bg-[var(--color-manga-black)]"
-                        />
-                      </div>
+              <div className="dossier-element flex flex-col gap-3 mt-2">
+                {Object.entries(characters[0].stats).map(([key, val]) => (
+                  <div key={key} className="flex items-center gap-4">
+                    <span className="w-16 text-[0.65rem] font-bold tracking-[0.2em] uppercase opacity-80">{key}</span>
+                    <div className="flex-1 h-1 border-[1px] border-[var(--color-manga-black)] relative overflow-hidden bg-[var(--color-manga-light)]">
+                      <div
+                        className="stat-bar-fill absolute top-0 left-0 h-full bg-[var(--color-manga-black)]"
+                        data-width={`${val}%`}
+                        style={{ width: 0 }}
+                      />
                     </div>
-                  ))}
-                </div>
+                  </div>
+                ))}
               </div>
-
-              <div className="w-full md:w-1/2 relative min-h-[300px] flex items-end justify-center">
-                <motion.div
-                  initial={{ scale: 0.9, opacity: 0, y: 30 }}
-                  animate={{ scale: 1, opacity: 1, y: 0 }}
-                  transition={{ duration: 0.7, delay: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
-                  className="w-56 h-80 bg-[var(--color-manga-black)] mb-4 relative before:absolute before:inset-0 before:bg-white before:opacity-[0.05] before:mix-blend-overlay"
-                  style={{
-                    clipPath: activeId === 1
-                      ? "polygon(50% 0%, 35% 15%, 25% 10%, 30% 25%, 20% 35%, 5% 55%, 15% 58%, 10% 75%, 25% 65%, 35% 100%, 65% 100%, 75% 65%, 90% 75%, 85% 58%, 95% 55%, 80% 35%, 70% 25%, 75% 10%, 65% 15%)"
-                      : activeId === 2
-                        ? "polygon(50% 0%, 40% 10%, 30% 5%, 35% 20%, 15% 40%, 5% 60%, 20% 55%, 15% 80%, 30% 70%, 40% 100%, 60% 100%, 70% 70%, 85% 80%, 80% 55%, 95% 60%, 85% 40%, 65% 20%, 70% 5%, 60% 10%)"
-                        : "polygon(50% 0%, 38% 12%, 20% 8%, 28% 28%, 8% 45%, 0% 62%, 18% 58%, 12% 82%, 28% 72%, 38% 100%, 62% 100%, 72% 72%, 88% 82%, 82% 58%, 100% 62%, 92% 45%, 72% 28%, 80% 8%, 62% 12%)"
-                  }}
-                />
-              </div>
-            </motion.div>
-          </AnimatePresence>
+            </div>
+          </div>
         </div>
+
+        {/* KAITO DOSSIER */}
+        <div 
+          ref={rightPanelRef} 
+          className="w-full lg:w-1/2 p-6 sm:p-8 lg:p-10 relative group overflow-hidden bg-[var(--color-manga-black)] text-[var(--color-manga-white)]"
+        >
+          <span className="absolute -bottom-6 -left-6 text-[14rem] leading-none opacity-[0.05] font-bold pointer-events-none transition-transform duration-1000 group-hover:scale-105" style={{ fontFamily: 'var(--font-noto)' }}>{characters[1].kanji}</span>
+          
+          <div className="relative z-10 h-full flex flex-col justify-between min-h-[450px]">
+            <div className="dossier-element flex justify-between items-start">
+              <div>
+                <h3 className="text-4xl sm:text-5xl font-bold tracking-[0.02em] -skew-x-[8deg] uppercase leading-none">{characters[1].name}</h3>
+                <p className="text-xs font-bold tracking-[0.3em] mt-2 uppercase opacity-70">{characters[1].role}</p>
+              </div>
+              <span className="text-[3.5rem] sm:text-[4.5rem] leading-none opacity-[0.07] font-bold" style={{ fontFamily: 'var(--font-noto)' }}>{characters[1].kanji}</span>
+            </div>
+
+            <div className="dossier-element flex-1 flex items-center justify-center py-10">
+              <div 
+                className="w-32 h-44 sm:w-40 sm:h-56 bg-[var(--color-manga-white)] relative before:absolute before:inset-0 before:bg-black before:opacity-[0.05] before:mix-blend-overlay transition-transform duration-700 ease-[var(--ease-cinematic)] group-hover:scale-[1.02]"
+                style={{ clipPath: characters[1].shape }}
+              />
+            </div>
+
+            <div className="flex flex-col gap-6">
+              <p className="dossier-element text-sm sm:text-base font-medium italic tracking-wide opacity-80 border-l-4 pl-4 border-[var(--color-manga-white)] py-1">
+                &quot;{characters[1].quote}&quot;
+              </p>
+
+              <div className="dossier-element flex flex-col gap-3 mt-2">
+                {Object.entries(characters[1].stats).map(([key, val]) => (
+                  <div key={key} className="flex items-center gap-4">
+                    <span className="w-16 text-[0.65rem] font-bold tracking-[0.2em] uppercase opacity-80">{key}</span>
+                    <div className="flex-1 h-1 border-[1px] border-[var(--color-manga-white)] relative overflow-hidden bg-black/[0.3]">
+                      <div
+                        className="stat-bar-fill absolute top-0 left-0 h-full bg-[var(--color-manga-white)]"
+                        data-width={`${val}%`}
+                        style={{ width: 0 }}
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </section>
   );

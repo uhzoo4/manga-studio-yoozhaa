@@ -2,34 +2,60 @@
 
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 export default function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
-  const { scrollY } = useScroll();
-  const yParallax = useTransform(scrollY, [0, 1000], [0, 200]);
+  const starburstRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.from(".hero-char", {
-        y: 100,
-        opacity: 0,
-        rotateX: -90,
-        stagger: 0.05,
-        duration: 1.2,
-        ease: "power4.out",
-        delay: 2.8
-      });
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-      gsap.from(".hero-anim-up", {
-        opacity: 0,
-        y: 30,
-        duration: 1,
-        ease: "power3.out",
-        stagger: 0.2,
-        delay: 3.5
-      });
+    const ctx = gsap.context(() => {
+      if (!prefersReduced) {
+        // Title character animation
+        gsap.from(".hero-char", {
+          y: 100,
+          opacity: 0,
+          rotateX: -90,
+          stagger: 0.05,
+          duration: 1.2,
+          ease: "power4.out",
+          delay: 2.8
+        });
+
+        // Sub-elements fade up
+        gsap.from(".hero-anim-up", {
+          opacity: 0,
+          y: 30,
+          duration: 1,
+          ease: "power3.out",
+          stagger: 0.2,
+          delay: 3.5
+        });
+
+        // --- PHASE 2: Light parallax on starburst background ---
+        if (starburstRef.current) {
+          gsap.fromTo(starburstRef.current,
+            { y: 0 },
+            {
+              y: 200,
+              ease: "none",
+              scrollTrigger: {
+                trigger: containerRef.current,
+                start: "top top",
+                end: "bottom top",
+                scrub: true,
+              }
+            }
+          );
+        }
+      }
     }, containerRef);
 
     return () => ctx.revert();
@@ -45,11 +71,18 @@ export default function Hero() {
 
   return (
     <section ref={containerRef} className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden border-b-[2px] border-[var(--color-manga-black)] pt-28 pb-24 px-6 bg-gradient-to-b from-[var(--color-manga-white)] to-[#ebe6de]">
-      <motion.div style={{ y: yParallax, maskImage: 'radial-gradient(ellipse 70% 70% at center, black 30%, transparent 80%)', WebkitMaskImage: 'radial-gradient(ellipse 70% 70% at center, black 30%, transparent 80%)' }} className="absolute inset-0 flex items-center justify-center pointer-events-none z-0 -translate-y-[5%]">
+      <div
+        ref={starburstRef}
+        className="absolute inset-0 flex items-center justify-center pointer-events-none z-0 -translate-y-[5%] will-change-transform"
+        style={{
+          maskImage: 'radial-gradient(ellipse 70% 70% at center, black 30%, transparent 80%)',
+          WebkitMaskImage: 'radial-gradient(ellipse 70% 70% at center, black 30%, transparent 80%)',
+        }}
+      >
         <svg className="w-[140%] max-w-[1600px] opacity-[0.06] starburst-spin" viewBox="0 0 800 800" preserveAspectRatio="xMidYMid slice">
           <polygon className="fill-[var(--color-manga-black)]" points="400,0 440,300 800,200 480,380 700,600 420,440 400,800 380,440 100,600 320,380 0,200 360,300" />
         </svg>
-      </motion.div>
+      </div>
 
       <div className="relative z-10 text-center flex flex-col items-center">
         <div className="relative bg-[var(--color-manga-white)] border-[2px] border-[var(--color-manga-black)] px-7 py-3 mb-6 hero-anim-up opacity-0">
