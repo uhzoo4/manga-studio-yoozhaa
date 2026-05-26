@@ -38,7 +38,13 @@ export default function Characters() {
 
   useEffect(() => {
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReduced) return;
+    if (prefersReduced) {
+      const bars = containerRef.current?.querySelectorAll<HTMLElement>('.stat-bar-fill');
+      bars?.forEach((bar) => {
+        bar.style.width = bar.getAttribute('data-width') || '0%';
+      });
+      return;
+    }
 
     const ctx = gsap.context(() => {
 
