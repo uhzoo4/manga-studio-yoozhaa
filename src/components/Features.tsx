@@ -161,7 +161,7 @@ export default function Features() {
                         <span className="block text-[0.65rem] tracking-[0.3em] font-bold text-white/40 uppercase mb-1 md:mb-0">Chapter</span>
                         <span className="text-3xl md:text-4xl font-bold text-white/80" style={{ fontFamily: 'var(--font-title)' }}>{feature.number}</span>
                       </div>
-                      <span className="text-2xl text-white/20 md:mt-16" style={{ fontFamily: 'var(--font-noto)' }}>{feature.sfx}</span>
+                      <span className="manga-sfx-mark text-2xl text-white/20 md:mt-16" style={{ fontFamily: 'var(--font-noto)' }}>{feature.sfx}</span>
                     </div>
 
                     {/* Center/Title & Desc */}

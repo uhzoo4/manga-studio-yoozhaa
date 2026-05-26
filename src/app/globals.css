@@ -126,6 +126,17 @@ body {
    Minimal zoom on image, subtle contrast.
    ======================================== */
 @media (hover: hover) and (pointer: fine) {
+  .panel-sfx,
+  .manga-sfx-mark {
+    transform-origin: 45% 55%;
+    will-change: transform;
+  }
+
+  .story-panel-tilt:hover .panel-sfx,
+  .f-row:hover .manga-sfx-mark {
+    animation: mangaSfxPulse 520ms steps(2, end) both;
+  }
+
   .panel-tilt-frame {
     transform: perspective(1200px) rotateX(0deg) rotateY(0deg) translateZ(0);
     transform-style: preserve-3d;
@@ -164,6 +175,24 @@ body {
    PHASE 3 — Reduced Motion
    Respect prefers-reduced-motion.
    ======================================== */
+@keyframes mangaSfxPulse {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(-2deg) scale(1);
+  }
+
+  35% {
+    transform: translate3d(1px, -1px, 0) rotate(-3deg) scale(1.035);
+  }
+
+  70% {
+    transform: translate3d(-1px, 1px, 0) rotate(-1deg) scale(1.015);
+  }
+
+  100% {
+    transform: translate3d(0, 0, 0) rotate(-2deg) scale(1);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -184,7 +213,10 @@ body {
   }
 
   .panel-tilt-frame,
-  .panel-art-breath {
+  .panel-art-breath,
+  .panel-sfx,
+  .manga-sfx-mark {
     transform: none !important;
+    animation: none !important;
   }
 }

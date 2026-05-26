@@ -14,9 +14,25 @@ export default function Footer() {
         </p>
 
         <div className="flex gap-8 text-xs font-bold tracking-[0.15em] uppercase">
-          <a href="#" className="opacity-60 hover:opacity-100 hover:-translate-y-0.5 transition-all duration-300">Twitter</a>
-          <a href="#" className="opacity-60 hover:opacity-100 hover:-translate-y-0.5 transition-all duration-300">Discord</a>
-          <a href="#" className="opacity-60 hover:opacity-100 hover:-translate-y-0.5 transition-all duration-300">GitHub</a>
+          <a
+            href="https://x.com/Yoozhaa1"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Open Yoozhaa on X in a new tab"
+            className="opacity-60 hover:opacity-100 hover:-translate-y-0.5 transition-all duration-300"
+          >
+            Twitter / X
+          </a>
+          <span className="opacity-60">Discord: yoozha_4</span>
+          <a
+            href="https://github.com/uhzoo4"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Open Yoozhaa on GitHub in a new tab"
+            className="opacity-60 hover:opacity-100 hover:-translate-y-0.5 transition-all duration-300"
+          >
+            GitHub
+          </a>
         </div>
       </div>
     </footer>

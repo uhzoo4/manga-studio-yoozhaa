@@ -158,6 +158,7 @@ export default function PanelGrid() {
         const title = panel.getAttribute('data-panel-title') || '';
         const motionOverride = panelMotionMap[title] || {};
         const motion = { ...defaultMotion, ...motionOverride };
+        const panelDelay = index * 0.045;
 
         gsap.fromTo(panel,
           {
@@ -170,7 +171,7 @@ export default function PanelGrid() {
             y: 0,
             scale: 1,
             duration: motion.duration,
-            delay: index * 0.045,
+            delay: panelDelay,
             ease: motion.ease,
             scrollTrigger: {
               trigger: panel,
@@ -179,6 +180,51 @@ export default function PanelGrid() {
             }
           }
         );
+
+        const sfx = panel.querySelector('.panel-sfx');
+        if (sfx) {
+          gsap.fromTo(sfx,
+            {
+              opacity: 0,
+              y: -3,
+              scale: 0.96,
+              rotate: -4,
+            },
+            {
+              opacity: 1,
+              y: 0,
+              scale: 1,
+              rotate: -2,
+              duration: 0.42,
+              delay: panelDelay + motion.duration * 0.42,
+              ease: "power2.out",
+              scrollTrigger: {
+                trigger: panel,
+                start: "top 88%",
+                toggleActions: "play none none none",
+              }
+            }
+          );
+        }
+
+        const watermark = panel.querySelector('.panel-watermark');
+        if (watermark) {
+          gsap.fromTo(watermark,
+            { opacity: 0.22, y: 2 },
+            {
+              opacity: 0.3,
+              y: 0,
+              duration: 1.1,
+              delay: panelDelay + 0.12,
+              ease: "power1.out",
+              scrollTrigger: {
+                trigger: panel,
+                start: "top 88%",
+                toggleActions: "play none none none",
+              }
+            }
+          );
+        }
 
         // Subtle internal image parallax (very light depth)
         const img = panel.querySelector('.panel-art');
@@ -330,7 +376,7 @@ export default function PanelGrid() {
             <div className="absolute inset-0 z-10 bg-black/40 group-hover/panel:bg-black/10 transition-colors duration-500" />
 
             {/* Explicit Unique Background Watermark */}
-            <div className="absolute inset-0 z-[12] flex items-center justify-center overflow-hidden pointer-events-none mix-blend-overlay opacity-30 group-hover/panel:opacity-50 transition-opacity duration-500">
+            <div className="panel-watermark absolute inset-0 z-[12] flex items-center justify-center overflow-hidden pointer-events-none mix-blend-overlay opacity-30 group-hover/panel:opacity-50 transition-opacity duration-500">
               <span className="text-[3rem] md:text-[5.5rem] font-bold text-white uppercase whitespace-nowrap transform -rotate-[8deg] tracking-widest" style={{ fontFamily: 'var(--font-title)' }}>
                 {panel.watermark}
               </span>
@@ -375,7 +421,7 @@ export default function PanelGrid() {
 
             {/* SFX badge */}
             {panel.sfx && (
-              <div className="absolute top-4 left-4 z-30 bg-white text-black border-[2px] border-black px-2 py-1 font-bold text-[10px] md:text-xs transform -rotate-2 group-hover/panel:scale-110 group-hover/panel:-rotate-3 transition-all duration-300 shadow-[3px_3px_0_rgba(0,0,0,0.5)]"
+              <div className="panel-sfx absolute top-4 left-4 z-30 bg-white text-black border-[2px] border-black px-2 py-1 font-bold text-[10px] md:text-xs transform -rotate-2 group-hover/panel:scale-110 group-hover/panel:-rotate-3 transition-all duration-300 shadow-[3px_3px_0_rgba(0,0,0,0.5)]"
                 style={{ fontFamily: 'var(--font-space)' }}>
                 {panel.sfx}
               </div>
