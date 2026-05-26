@@ -21,31 +21,32 @@ type PanelMotion = {
 const panelMotionMap: Record<string, Partial<PanelMotion>> = {
   "THE STRIKE": {
     // Restrained punch emphasis — slightly deeper scale travel
-    scale: 0.95,
-    y: 25,
-    duration: 0.85,
+    scale: 0.985,
+    y: 18,
+    duration: 0.82,
     ease: "power2.out",
   },
   "RISING SHADOW": {
     // Shadow reveal — slower, heavier, atmospheric
-    y: 35,
-    duration: 1.3,
+    y: 24,
+    scale: 0.99,
+    duration: 1.05,
     ease: "power2.inOut",
   },
   "THE AWAKENING": {
     // Subtle emergence — reader attention first
-    y: 20,
-    scale: 0.98,
-    duration: 1.15,
+    y: 14,
+    scale: 0.995,
+    duration: 0.95,
     ease: "power1.out",
   },
 };
 
 const defaultMotion: PanelMotion = {
-  y: 28,
-  scale: 0.96,
-  duration: 0.9,
-  ease: "power3.out",
+  y: 18,
+  scale: 0.99,
+  duration: 0.82,
+  ease: "power2.out",
 };
 
 const TILT_MAX_DEGREES = 5;
@@ -142,9 +143,9 @@ export default function PanelGrid() {
       // --- Section heading reveal ---
       gsap.from(".story-heading", {
         opacity: 0,
-        y: 20,
+        y: 16,
         duration: 0.8,
-        ease: "power3.out",
+        ease: "power2.out",
         scrollTrigger: {
           trigger: containerRef.current,
           start: "top 85%",
@@ -153,7 +154,7 @@ export default function PanelGrid() {
       });
 
       // --- PHASE 1: Sequential panel reveal ---
-      panels.forEach((panel) => {
+      panels.forEach((panel, index) => {
         const title = panel.getAttribute('data-panel-title') || '';
         const motionOverride = panelMotionMap[title] || {};
         const motion = { ...defaultMotion, ...motionOverride };
@@ -169,6 +170,7 @@ export default function PanelGrid() {
             y: 0,
             scale: 1,
             duration: motion.duration,
+            delay: index * 0.045,
             ease: motion.ease,
             scrollTrigger: {
               trigger: panel,

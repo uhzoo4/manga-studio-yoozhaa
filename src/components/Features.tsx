@@ -62,8 +62,8 @@ export default function Features() {
       // --- Heading reveal ---
       gsap.from(".features-heading-el", {
         opacity: 0,
-        y: 20,
-        duration: 1,
+        y: 16,
+        duration: 0.85,
         ease: "power2.out",
         scrollTrigger: {
           trigger: ".features-heading-el",
@@ -74,17 +74,18 @@ export default function Features() {
 
       // --- Feature rows: subtle staggered reveal ---
       const rows = gsap.utils.toArray<HTMLElement>('.f-row');
-      rows.forEach((row) => {
+      rows.forEach((row, index) => {
         gsap.fromTo(row,
-          { opacity: 0, y: 25 },
+          { opacity: 0, y: 22 },
           {
             opacity: 1,
             y: 0,
-            duration: 1,
+            duration: 0.82,
+            delay: index * 0.04,
             ease: "power2.out",
             scrollTrigger: {
               trigger: row,
-              start: "top 90%",
+              start: "top 88%",
               toggleActions: "play none none none",
             }
           }

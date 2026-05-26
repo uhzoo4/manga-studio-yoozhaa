@@ -45,9 +45,9 @@ export default function Characters() {
       // --- Narrative heading reveal ---
       gsap.from(".char-narrative", {
         opacity: 0,
-        y: 20,
-        duration: 0.9,
-        ease: "power3.out",
+        y: 16,
+        duration: 0.85,
+        ease: "power2.out",
         scrollTrigger: {
           trigger: containerRef.current,
           start: "top 85%",
@@ -60,9 +60,9 @@ export default function Characters() {
         // Panel fade + rise
         gsap.from(leftPanelRef.current, {
           opacity: 0,
-          y: 30,
-          duration: 1,
-          ease: "power3.out",
+          y: 24,
+          duration: 0.9,
+          ease: "power2.out",
           scrollTrigger: {
             trigger: leftPanelRef.current,
             start: "top 88%",
@@ -74,10 +74,10 @@ export default function Characters() {
         const leftInternals = leftPanelRef.current.querySelectorAll('.dossier-element');
         gsap.from(leftInternals, {
           opacity: 0,
-          y: 15,
-          duration: 0.7,
+          y: 12,
+          duration: 0.65,
           ease: "power2.out",
-          stagger: 0.12,
+          stagger: 0.1,
           scrollTrigger: {
             trigger: leftPanelRef.current,
             start: "top 80%",
@@ -93,8 +93,8 @@ export default function Characters() {
             { width: '0%' },
             {
               width: targetWidth,
-              duration: 1.1,
-              ease: "power3.out",
+              duration: 0.95,
+              ease: "power2.out",
               scrollTrigger: {
                 trigger: bar,
                 start: "top 92%",
@@ -110,10 +110,10 @@ export default function Characters() {
         // Panel fade + rise with slight delay for reading stagger
         gsap.from(rightPanelRef.current, {
           opacity: 0,
-          y: 30,
-          duration: 1,
-          delay: 0.15,
-          ease: "power3.out",
+          y: 24,
+          duration: 0.9,
+          delay: 0.12,
+          ease: "power2.out",
           scrollTrigger: {
             trigger: rightPanelRef.current,
             start: "top 88%",
@@ -125,11 +125,11 @@ export default function Characters() {
         const rightInternals = rightPanelRef.current.querySelectorAll('.dossier-element');
         gsap.from(rightInternals, {
           opacity: 0,
-          y: 15,
-          duration: 0.7,
+          y: 12,
+          duration: 0.65,
           ease: "power2.out",
-          stagger: 0.12,
-          delay: 0.2,
+          stagger: 0.1,
+          delay: 0.16,
           scrollTrigger: {
             trigger: rightPanelRef.current,
             start: "top 80%",
@@ -145,9 +145,9 @@ export default function Characters() {
             { width: '0%' },
             {
               width: targetWidth,
-              duration: 1.1,
-              delay: 0.1,
-              ease: "power3.out",
+              duration: 0.95,
+              delay: 0.08,
+              ease: "power2.out",
               scrollTrigger: {
                 trigger: bar,
                 start: "top 92%",
